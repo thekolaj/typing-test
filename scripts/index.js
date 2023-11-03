@@ -34,7 +34,7 @@ function resetTest() {
   inputField.value = ''
   checkUserInput(inputField.value, allTextElements)
   if (stats && stats.intervalEventID) stats.stopTimer()
-  stats = new Stats(allTextElements)
+  stats = new Stats()
 }
 
 startNewTest()
