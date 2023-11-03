@@ -11,12 +11,18 @@
 
 <body>
   <input type="text" class="input-field">
-  <header class="container">I am a header</header>
-  <main class="container">
-    <div class="text-display">
-    </div>
+  <header class="container horizontal">
+    <button id="restart" class="btn">"Enter": Restart with new text</button>
+    <button id="reset" class="btn">"Escape": Reset current text</button>
+  </header>
+  <section class="horizontal container defined">
+    <div>⏳: <span id="timer"></span></div>
+    <div>WPM: <span id="wpm"></span></div>
+    <div>🎯: <span id="accuracy"></span>%</div>
+  </section>
+  <main id="text-display" class="container defined">
   </main>
-  <footer class="container">
+  <footer class="container defined">
     <div>data</div>
     <div>data</div>
     <div>data</div>

@@ -1,54 +1,40 @@
-// Settings:
-const file = 'texts.json'
-const maxTime = 60;
+import getRandomText from "./getRandomText.js";
+import checkUserInput from "./checkUserInput.js";
+import Stats from "./stats.js";
+
 
 // Elements:
 const inputField = document.querySelector('.input-field')
-const textDisplay = document.querySelector('.text-display')
+const textDisplay = document.querySelector('#text-display')
+
+// Values:
+let allTextElements
+let stats
 
 // Events:
 document.addEventListener('keydown', event => {
-  inputField.focus()
-  if (event.key === 'Escape') console.log(inputField)
-  if (event.key === 'Enter') startNewTest()
+  if (event.key === 'Escape') stats.startTimer()
+  else if (event.key === 'Enter') stats.stopTimer()
+  else inputField.focus()
 })
-inputField.addEventListener('input', checkUserInput)
-
-function checkUserInput() {
-  const fullText = textDisplay.querySelectorAll('span')
-  const userInput = inputField.value
-  for (let i = 0; i < fullText.length; i++) {
-    const userCharacter = userInput.charAt(i)
-    if (!userCharacter) {
-      fullText[i].className = ''
-    } else if (userCharacter === fullText[i].innerText) {
-      fullText[i].className = 'correct'
-    } else {
-      fullText[i].className = 'incorrect'
-    }
-  }
-  fullText[userInput.length].className = 'active'
-}
-
-/**
- * Get random text from file
- * @param {string} file Path to JSON file with array of texts.
- * @returns {string}
- */
-async function getRandomText(file) {
-   return fetch(file)
-    .then(res => res.json())
-    .then(data => data[Math.floor(Math.random() * data.length)])
-    .catch(() => 'Error! Could not open file: ' + file)
-}
+inputField.addEventListener('input', () => {checkUserInput(inputField.value, allTextElements)})
+document.querySelector('#restart').addEventListener('click', startNewTest)
+document.querySelector('#reset').addEventListener('click', resetTest)
 
 async function startNewTest() {
-  const text = await getRandomText(file)
+  const text = await getRandomText()
   textDisplay.innerHTML = text.split('').reduce((fullText, currentCharacter) => {
     return fullText + `<span>${currentCharacter}</span>`
   }, '')
-  textDisplay.querySelector('span').classList.add('active')
+  allTextElements = textDisplay.querySelectorAll('span')
+  resetTest()
+}
+
+function resetTest() {
   inputField.value = ''
+  checkUserInput(inputField.value, allTextElements)
+  if (stats && stats.intervalEventID) stats.stopTimer()
+  stats = new Stats(allTextElements)
 }
 
 startNewTest()

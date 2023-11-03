@@ -1,4 +1,5 @@
 :root {
+  --max-width: 900px;
   --border-radius: .5rem;
   --font-size:28px;
   --big-font: 2rem;
@@ -19,27 +20,43 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
   background-color: var(--background-back);
   color: var(--text-color);
-  font-size: var(--font-size)
+  font-size: var(--font-size);
 }
 
 .container {
-  max-width: 900px;
+  max-width: var(--max-width);
   width: 90%;
+  margin-bottom: 20px;
+}
+
+.defined {
   border: 1px solid var(--text-color);
   border-radius: var(--border-radius);
   padding: 30px;
-  margin-bottom: 20px;
   background-color: var(--background-front);
 }
 
-/* .input-field {
+.horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  font-size: var(--font-size);
+  padding: .5rem;
+  background-color: var(--background-front);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+}
+
+.input-field {
   opacity: 0;
-} */
+}
 
 .active {
   background-color: var(--background-back);
