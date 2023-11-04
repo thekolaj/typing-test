@@ -12,8 +12,8 @@
 <body>
   <input type="text" id="input-field" class="input-field">
   <header class="container horizontal">
-    <button id="restart" class="btn">"Enter": Restart with new text</button>
-    <button id="reset" class="btn">"Escape": Reset current text</button>
+    <button id="new-test" class="btn">"Enter": Start new test</button>
+    <button id="restart" class="btn">"Escape": Restart current</button>
   </header>
   <section class="horizontal container defined">
     <div>⏳: <span id="timer"></span></div>
@@ -23,8 +23,9 @@
   <main id="text-display" class="container defined">
   </main>
   <footer class="container defined">
-    <table id="stats-display" class="stats-display" frame=void rules=rows>
-      <tr>
+    <table class="stats-display" frame=void rules=rows>
+      <div id="no-data" hidden>No past results found</div>
+      <tr id="stats-header">
         <th>📅</th>
         <th>⏰</th>
         <th>⏳</th>

@@ -20,7 +20,6 @@ export default class Stats {
 
   startTimer = () => {
     this.intervalEventID = setInterval(() => {
-      console.log("started");
       this.timeLeft--
       Stats.updateStatsDisplay(this.timeLeft, ...this.calculateStats(maxTime - this.timeLeft))
       if (this.timeLeft === 0) {
@@ -39,7 +38,7 @@ export default class Stats {
   calculateStats(timeElapsed) {
     const charactersTyped = Stats.inputField.value.length
     const charactersCorrect = Stats.textDisplay.querySelectorAll('.correct').length
-    const accuracy = charactersTyped ? Math.round((100 * charactersCorrect) / charactersTyped) : 100
+    const accuracy = charactersTyped ? Math.round((100*charactersCorrect) / charactersTyped) : 100
     const wpm = Math.round((charactersCorrect / 5) / ((timeElapsed) / 60))
     return [wpm, accuracy]
   }
@@ -49,9 +48,23 @@ export default class Stats {
     return [date, time.split('.')[0], maxTime, ...this.calculateStats(maxTime)]
   }
 
+  static updateStatsWithDifference(newWpm, newAccuracy, oldWpm, oldAccuracy) {
+    this.timerDisplay.innerHTML = '<span class="correct">Finish!</span>'
+    const wpmDifference = this.addColorCode(newWpm - oldWpm)
+    const accuracyDifference = this.addColorCode(newAccuracy - oldAccuracy)
+    this.wpmDisplay.innerHTML = `${newWpm} (${wpmDifference})`
+    this.accuracyDisplay.innerHTML = `${newAccuracy} (${accuracyDifference})`
+  }
+
   static updateStatsDisplay(time, wpm, accuracy) {
     this.timerDisplay.innerText = time
     this.wpmDisplay.innerText = wpm
     this.accuracyDisplay.innerText = accuracy
+  }
+
+  static addColorCode(number) {
+    if (number > 0) return `<span class="correct">+${number}</span>`
+    else if (number < 0)  return `<span class="incorrect">${number}</span>`
+    else return '0'
   }
 }

@@ -9,7 +9,7 @@
   --incorrect-color: rgb(100, 0, 0);
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 600px) {
   :root {
     --font-size: 14px;
   }
@@ -88,4 +88,9 @@ body {
 
 .stats-display td {
   padding: 10px
+}
+
+#no-data {
+  text-align: center;
+  font-size: 2em;
 }

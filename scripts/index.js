@@ -1,26 +1,27 @@
 import getRandomText from "./getRandomText.js";
 import checkUserInput from "./checkUserInput.js";
 import Stats from "./stats.js";
+import Archive from "./archive.js";
 
 
 // Elements:
 const inputField = document.querySelector('#input-field')
 const textDisplay = document.querySelector('#text-display')
-const statsDisplay = document.querySelector('#stats-display')
 
 // Values:
 let allTextElements
 let stats
+const archive = new Archive()
 
 // Events:
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') startNewTest()
-  else if (event.key === 'Enter') resetTest()
+  if (event.key === 'Escape') resetTest()
+  else if (event.key === 'Enter') startNewTest()
   else inputField.focus()
 })
 inputField.addEventListener('input', () => checkUserInput(inputField.value, allTextElements))
-document.querySelector('#restart').addEventListener('click', startNewTest)
-document.querySelector('#reset').addEventListener('click', resetTest)
+document.querySelector('#new-test').addEventListener('click', startNewTest)
+document.querySelector('#restart').addEventListener('click', resetTest)
 
 async function startNewTest() {
   const text = await getRandomText()
@@ -32,11 +33,13 @@ async function startNewTest() {
 
 function endTest() {
   inputField.setAttribute('disabled', true)
-  const testResults = stats.calculateFinalStats()
-  const row = document.createElement('tr')
-  row.innerHTML = testResults.reduce(
-    (allColumns, currentColumn) => allColumns + `<td>${currentColumn}</td>`, '')
-  statsDisplay.appendChild(row)
+  const testResult = stats.calculateFinalStats()
+  if (archive.allResults.length) {
+    const lastResult = archive.allResults.slice(-1)[0]
+    Stats.updateStatsWithDifference(testResult[3], testResult[4], lastResult[3], lastResult[4])
+  } else archive.toggleResultsDisplay('hidden')
+  archive.addResultToTopRow(testResult)
+  archive.saveResults(testResult)
 }
 
 function resetTest() {
