@@ -13,11 +13,11 @@ let stats
 
 // Events:
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape') stats.startTimer()
-  else if (event.key === 'Enter') stats.stopTimer()
+  if (event.key === 'Escape') startNewTest()
+  else if (event.key === 'Enter') resetTest()
   else inputField.focus()
 })
-inputField.addEventListener('input', () => {checkUserInput(inputField.value, allTextElements)})
+inputField.addEventListener('input', () => checkUserInput(inputField.value, allTextElements))
 document.querySelector('#restart').addEventListener('click', startNewTest)
 document.querySelector('#reset').addEventListener('click', resetTest)
 
@@ -30,11 +30,16 @@ async function startNewTest() {
   resetTest()
 }
 
+function endTest() {
+  inputField.setAttribute('disabled', true)
+}
+
 function resetTest() {
   inputField.value = ''
+  inputField.removeAttribute('disabled')
   checkUserInput(inputField.value, allTextElements)
-  if (stats && stats.intervalEventID) stats.stopTimer()
-  stats = new Stats()
+  if (stats) stats.removeTimer()
+  stats = new Stats(endTest)
 }
 
 startNewTest()

@@ -54,9 +54,9 @@ body {
   border-radius: var(--border-radius);
 }
 
-.input-field {
+/* .input-field {
   opacity: 0;
-}
+} */
 
 .active {
   background-color: var(--background-back);

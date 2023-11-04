@@ -1,4 +1,4 @@
 const filePath = '/texts.json'
-const maxTime = 60;
+const maxTime = 5;
 
 export {filePath, maxTime}
