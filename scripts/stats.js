@@ -6,7 +6,7 @@ export default class Stats {
   static wpmDisplay = document.querySelector('#wpm')
   static accuracyDisplay = document.querySelector('#accuracy')
   static textDisplay = document.querySelector('#text-display')
-  static inputField = document.querySelector('.input-field')
+  static inputField = document.querySelector('#input-field')
 
   constructor(endTest) {
     this.endTest = endTest
@@ -15,14 +15,14 @@ export default class Stats {
     Stats.timerDisplay.innerText = maxTime
     Stats.wpmDisplay.innerText = 0
     Stats.accuracyDisplay.innerText = 100
-    Stats.inputField.addEventListener('input', this.startTimer, { once: true})
+    Stats.inputField.addEventListener('input', this.startTimer, { once: true })
   }
 
   startTimer = () => {
     this.intervalEventID = setInterval(() => {
       console.log("started");
       this.timeLeft--
-      Stats.updateStatsDisplay(this.timeLeft, ...this.calculateStats())
+      Stats.updateStatsDisplay(this.timeLeft, ...this.calculateStats(maxTime - this.timeLeft))
       if (this.timeLeft === 0) {
         this.removeTimer()
         this.endTest()
@@ -36,12 +36,17 @@ export default class Stats {
     this.intervalEventID = false
   }
 
-  calculateStats() {
+  calculateStats(timeElapsed) {
     const charactersTyped = Stats.inputField.value.length
     const charactersCorrect = Stats.textDisplay.querySelectorAll('.correct').length
     const accuracy = charactersTyped ? Math.round((100 * charactersCorrect) / charactersTyped) : 100
-    const wpm = Math.round((charactersCorrect / 5) / ((maxTime - this.timeLeft) / 60))
+    const wpm = Math.round((charactersCorrect / 5) / ((timeElapsed) / 60))
     return [wpm, accuracy]
+  }
+
+  calculateFinalStats() {
+    const [date, time] = new Date().toISOString().split('T')
+    return [date, time.split('.')[0], maxTime, ...this.calculateStats(maxTime)]
   }
 
   static updateStatsDisplay(time, wpm, accuracy) {
@@ -49,6 +54,4 @@ export default class Stats {
     this.wpmDisplay.innerText = wpm
     this.accuracyDisplay.innerText = accuracy
   }
-
-
 }

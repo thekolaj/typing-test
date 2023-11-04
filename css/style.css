@@ -2,12 +2,17 @@
   --max-width: 900px;
   --border-radius: .5rem;
   --font-size:28px;
-  --big-font: 2rem;
   --background-back: rgb(51, 51, 51);
   --background-front: rgb(17, 17, 17);
   --text-color: rgb(223, 223, 223);
   --correct-color: rgb(0, 100, 0);
   --incorrect-color: rgb(100, 0, 0);
+}
+
+@media screen and (max-width: 550px) {
+  :root {
+    --font-size: 14px;
+  }
 }
 
 * {
@@ -54,9 +59,9 @@ body {
   border-radius: var(--border-radius);
 }
 
-/* .input-field {
+.input-field {
   opacity: 0;
-} */
+}
 
 .active {
   background-color: var(--background-back);
@@ -69,4 +74,18 @@ body {
 
 .incorrect {
   color: var(--incorrect-color);
+}
+
+.stats-display {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+
+.stats-display th {
+  padding-bottom: 10px;
+}
+
+.stats-display td {
+  padding: 10px
 }

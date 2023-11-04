@@ -4,8 +4,9 @@ import Stats from "./stats.js";
 
 
 // Elements:
-const inputField = document.querySelector('.input-field')
+const inputField = document.querySelector('#input-field')
 const textDisplay = document.querySelector('#text-display')
+const statsDisplay = document.querySelector('#stats-display')
 
 // Values:
 let allTextElements
@@ -23,15 +24,19 @@ document.querySelector('#reset').addEventListener('click', resetTest)
 
 async function startNewTest() {
   const text = await getRandomText()
-  textDisplay.innerHTML = text.split('').reduce((fullText, currentCharacter) => {
-    return fullText + `<span>${currentCharacter}</span>`
-  }, '')
+  textDisplay.innerHTML = text.split('').reduce(
+    (fullText, currentCharacter) => fullText + `<span>${currentCharacter}</span>`, '')
   allTextElements = textDisplay.querySelectorAll('span')
   resetTest()
 }
 
 function endTest() {
   inputField.setAttribute('disabled', true)
+  const testResults = stats.calculateFinalStats()
+  const row = document.createElement('tr')
+  row.innerHTML = testResults.reduce(
+    (allColumns, currentColumn) => allColumns + `<td>${currentColumn}</td>`, '')
+  statsDisplay.appendChild(row)
 }
 
 function resetTest() {
