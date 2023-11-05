@@ -1,9 +1,9 @@
+import elements from "./elements.js"
+
 export default class Archive {
   allResults
 
   constructor() {
-    this.statsHeader = document.querySelector('#stats-header')
-    this.noResultsMessage = document.querySelector('#no-data')
     this.loadResults()
   }
 
@@ -25,11 +25,11 @@ export default class Archive {
     const row = document.createElement('tr')
     row.innerHTML = testResult.reduce(
       (allColumns, currentColumn) => allColumns + `<td>${currentColumn}</td>`, '')
-    this.statsHeader.after(row)
+    elements.statsHeader.after(row)
   }
 
   toggleResultsDisplay() {
-    this.statsHeader.toggleAttribute('hidden')
-    this.noResultsMessage.toggleAttribute('hidden')
+    elements.statsHeader.toggleAttribute('hidden')
+    elements.noResultsMessage.toggleAttribute('hidden')
   }
 }

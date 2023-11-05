@@ -1,13 +1,16 @@
-export default function checkUserInput(userInput, allTextElements) {
-  for (let i = 0; i < allTextElements.length; i++) {
+import elements, { currentTextElements } from "./elements.js"
+
+export default function checkUserInput() {
+  const userInput = elements.inputField.value
+  for (let i = 0; i < currentTextElements.length; i++) {
     const userCharacter = userInput.charAt(i)
     if (!userCharacter) {
-      allTextElements[i].className = ''
-    } else if (userCharacter === allTextElements[i].innerText) {
-      allTextElements[i].className = 'positive-color'
+      currentTextElements[i].className = ''
+    } else if (userCharacter === currentTextElements[i].innerText) {
+      currentTextElements[i].className = 'positive-color'
     } else {
-      allTextElements[i].className = 'negative-color'
+      currentTextElements[i].className = 'negative-color'
     }
   }
-  allTextElements[userInput.length].className = 'active'
+  currentTextElements[userInput.length].className = 'active'
 }
