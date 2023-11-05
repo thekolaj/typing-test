@@ -72,12 +72,16 @@ body {
   border-radius: var(--border-radius);
 }
 
-.correct {
+.positive-color {
   color: var(--correct-color)
 }
 
-.incorrect {
+.negative-color {
   color: var(--incorrect-color);
+}
+
+.neutral-color {
+  color: var(--start-color)
 }
 
 .stats-display {
@@ -94,11 +98,7 @@ body {
   padding: 0.3rem;
 }
 
-#no-data {
+.big-message {
   text-align: center;
   font-size: 2rem;
-}
-
-#start-message {
-  color: var(--start-color)
 }

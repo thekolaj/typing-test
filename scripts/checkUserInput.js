@@ -4,9 +4,9 @@ export default function checkUserInput(userInput, allTextElements) {
     if (!userCharacter) {
       allTextElements[i].className = ''
     } else if (userCharacter === allTextElements[i].innerText) {
-      allTextElements[i].className = 'correct'
+      allTextElements[i].className = 'positive-color'
     } else {
-      allTextElements[i].className = 'incorrect'
+      allTextElements[i].className = 'negative-color'
     }
   }
   allTextElements[userInput.length].className = 'active'

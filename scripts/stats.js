@@ -43,7 +43,7 @@ export default class Stats {
 
   calculateStats(timeElapsed) {
     const charactersTyped = Stats.inputField.value.length
-    const charactersCorrect = Stats.textDisplay.querySelectorAll('.correct').length
+    const charactersCorrect = Stats.textDisplay.querySelectorAll('.positive-color').length
     const accuracy = charactersTyped ? Math.round((100*charactersCorrect) / charactersTyped) : 100
     const wpm = Math.round((charactersCorrect / 5) / ((timeElapsed) / 60))
     return [wpm, accuracy]
@@ -55,7 +55,7 @@ export default class Stats {
   }
 
   static updateStatsWithDifference(newWpm, newAccuracy, oldWpm, oldAccuracy) {
-    this.timerDisplay.innerHTML = '<span class="correct">Finish!</span>'
+    this.timerDisplay.innerHTML = '<span class="positive-color">Finish!</span>'
     const wpmDifference = this.addColorCode(newWpm - oldWpm)
     const accuracyDifference = this.addColorCode(newAccuracy - oldAccuracy)
     this.wpmDisplay.innerHTML = `${newWpm} (${wpmDifference})`
@@ -69,8 +69,8 @@ export default class Stats {
   }
 
   static addColorCode(number) {
-    if (number > 0) return `<span class="correct">+${number}</span>`
-    else if (number < 0)  return `<span class="incorrect">${number}</span>`
-    else return '0'
+    if (number > 0) return `<span class="positive-color">+${number}</span>`
+    else if (number < 0)  return `<span class="negative-color">${number}</span>`
+    else return '<span class="neutral-color">0</span>'
   }
 }
