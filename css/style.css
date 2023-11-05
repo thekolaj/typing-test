@@ -7,6 +7,7 @@
   --text-color: rgb(223, 223, 223);
   --correct-color: rgb(0, 100, 0);
   --incorrect-color: rgb(100, 0, 0);
+  --start-color: rgb(204, 173, 0);
 }
 
 @media screen and (max-width: 600px) {
@@ -96,4 +97,8 @@ body {
 #no-data {
   text-align: center;
   font-size: 2rem;
+}
+
+#start-message {
+  color: var(--start-color)
 }

@@ -2,8 +2,10 @@ import { maxTime } from "../settings.js"
 
 
 export default class Stats {
+  static wpmBlock = document.querySelector('#wpm-block')
+  static startMessage = document.querySelector('#start-message')
   static timerDisplay = document.querySelector('#timer')
-  static wpmDisplay = document.querySelector('#wpm')
+  static wpmDisplay = this.wpmBlock.querySelector('#wpm')
   static accuracyDisplay = document.querySelector('#accuracy')
   static textDisplay = document.querySelector('#text-display')
   static inputField = document.querySelector('#input-field')
@@ -16,9 +18,13 @@ export default class Stats {
     Stats.wpmDisplay.innerText = 0
     Stats.accuracyDisplay.innerText = 100
     Stats.inputField.addEventListener('input', this.startTimer, { once: true })
+    Stats.wpmBlock.setAttribute('hidden', true)
+    Stats.startMessage.removeAttribute('hidden')
   }
 
   startTimer = () => {
+    Stats.wpmBlock.removeAttribute('hidden')
+    Stats.startMessage.setAttribute('hidden', true)
     this.intervalEventID = setInterval(() => {
       this.timeLeft--
       Stats.updateStatsDisplay(this.timeLeft, ...this.calculateStats(maxTime - this.timeLeft))
