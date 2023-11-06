@@ -1,5 +1,8 @@
 import elements, { currentTextElements } from "./elements.js"
 
+/** Compares user input with current text letter by letter.
+ * Adds color to highligh correct/incorrect letters and highlights next letter.
+ */
 export default function checkUserInput() {
   const userInput = elements.inputField.value
   for (let i = 0; i < currentTextElements.length; i++) {

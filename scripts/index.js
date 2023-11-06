@@ -4,24 +4,43 @@ import Archive from "./archive.js";
 import elements from "./elements.js";
 
 // Values:
+/** @type {Stats} Calculates stats. Recreated for each new test */
 let stats
+/** @type {Archive} Stores test results. Created once. */
 const archive = new Archive()
 
 // Events:
+// For every key press except 'Escape' or 'Enter', auto-focus on an invisible input field.
 document.addEventListener('keydown', event => {
   if (event.key === 'Escape') resetTest()
   else if (event.key === 'Enter') startNewTest()
   else elements.inputField.focus()
 })
+// When something changes in the input field, update text to reflect that change.
 elements.inputField.addEventListener('input', checkUserInput)
+// Make buttons active.
 elements.newTestBtn.addEventListener('click', startNewTest)
 elements.restartBtn.addEventListener('click', resetTest)
 
+/** Wait for text to load. Then reset the test. */
 async function startNewTest() {
   await elements.updateCurrentText()
   resetTest()
 }
 
+/** Reset user input field. Remove highlights from text.
+ * Remove timer in case the test was not finished.
+ * Resets stats.
+ */
+function resetTest() {
+  elements.inputField.value = ''
+  elements.inputField.removeAttribute('disabled')
+  checkUserInput()
+  if (stats) stats.removeTimer()
+  stats = new Stats(endTest)
+}
+
+/** Stop the test: Disable input, get, display and archive test result */
 function endTest() {
   elements.inputField.setAttribute('disabled', true)
   const testResult = stats.calculateFinalStats()
@@ -33,12 +52,5 @@ function endTest() {
   archive.saveResults(testResult)
 }
 
-function resetTest() {
-  elements.inputField.value = ''
-  elements.inputField.removeAttribute('disabled')
-  checkUserInput()
-  if (stats) stats.removeTimer()
-  stats = new Stats(endTest)
-}
-
+// Start a new test when page loads.
 startNewTest()
