@@ -102,3 +102,7 @@ body {
   text-align: center;
   font-size: 2rem;
 }
+
+#text-display {
+  white-space: pre-wrap;
+}
