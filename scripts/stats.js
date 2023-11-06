@@ -41,8 +41,9 @@ export default class Stats {
   }
 
   /** calculates wpm and accuracy based on time, length of users inputField
-   * and elements marked as correct on the textDisplay.
-   * @param {number} timeElapsed Time since test began or just maxTime at the end.
+   * and elements marked as correct on the textDisplay. With this formula,
+   * wrongly typed characters do not count towards WPM.
+   * @param {number} timeElapsed Time since test began or just maxTime if it ended.
    */
   #calculateStats(timeElapsed) {
     const charactersTyped = elements.inputField.value.length
